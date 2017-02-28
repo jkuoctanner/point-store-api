@@ -1,0 +1,171 @@
+FORMAT: 1A
+
+# Budget API
+
+The Budget API allows a client application to create, retrieve, and update budgets belonging to a company.
+
+## Budget [/budgets]
+
+## Create Budget [POST]
+
+Creates a new budget for a client.
+
++ Request (application/json)
+
+    + Attributes
+
+        + clientId `8a28cf7f-fa9e-44e9-ab3c-36f3086f4ad6` (string, required) - The client ID of the customer company.
+        + ownerId `ea8ca890-cf1e-491b-b588-7b2677aba124` (string, required) - The user ID of the owner of the budget.
+        + points: 100000 (number, required) - The number of points in this budget.
+        + startDate: `2017-01-01` (string, required) - Effective start date of the budget in ISO 8601 format.
+        + endDate: `2017-12-31` (string, required) - Effective end date of the budget in ISO 8601 format.
+
+    + Body
+    
+            {
+                "clientId": "8a28cf7f-fa9e-44e9-ab3c-36f3086f4ad6",
+                "ownerId": "ea8ca890-cf1e-491b-b588-7b2677aba124",
+                "points": 100000,
+                "startDate": "2017-01-01",
+                "endDate": "2017-12-31"
+            }
+        
++ Response 201 (application/json)
+
+    + Headers
+    
+            Location: /budgets/d022eef6-79aa-4938-872e-d0ff5bb92b6e
+
+    + Attributes (Budget)
+
++ Response 422 (application/json)
+
+    + Attributes
+    
+        + errors (array[Error])
+
++ Response 500 (application/json)
+
+    + Attributes
+    
+        + errors (array[Error])
+
+## Get Budget [GET /budgets/{id}]
+
+Retrieves a budget for a client.
+
++ Parameters
+    + id: `d022eef6-79aa-4938-872e-d0ff5bb92b6e` (string, required) - The ID of the budget to retrieve.
+
++ Response 200 (application/json)
+
+    + Attributes (Budget)
+
++ Response 404 (application/json)
+
+    + Attributes
+    
+        + errors (array[Error])
+
++ Response 500 (application/json)
+
+    + Attributes
+    
+        + errors (array[Error])
+
+## Update Budget [PATCH /budgets/{id}]
+
+Updates a budget for a client.
+
++ Parameters
+    + id: `d022eef6-79aa-4938-872e-d0ff5bb92b6e` (string, required) - The ID of the budget to update.
+
++ Request (application/json)
+
+    + Attributes
+
+        + ownerId `ea8ca890-cf1e-491b-b588-7b2677aba124` (string, optional) - The user ID of the owner of the budget.
+        + points: 100000 (number, optional) - The number of points in this budget.
+        + startDate: `2017-01-01` (string, optional) - Effective start date of the budget in ISO 8601 format.
+        + endDate: `2017-12-31` (string, optional) - Effective end date of the budget in ISO 8601 format.
+
+    + Body
+    
+            {
+                "ownerId": "ea8ca890-cf1e-491b-b588-7b2677aba124",
+                "points": 100000,
+                "startDate": "2017-01-01",
+                "endDate": "2017-12-31"
+            }
+        
++ Response 200 (application/json)
+
+    + Attributes (Budget)
+
++ Response 422 (application/json)
+
+    + Attributes
+    
+        + errors (array[Error])
+
++ Response 500 (application/json)
+
+    + Attributes
+    
+        + errors (array[Error])
+
+## Get Budgets [GET /budgets?clientId={clientId}]
+
+Retrieves a list of budgets for a given client ordered by start date.
+
++ Parameters
+    + clientId: `8a28cf7f-fa9e-44e9-ab3c-36f3086f4ad6` (string, required) - The client ID of the customer company.
+
++ Response 200 (application/json)
+
+    + Attributes (array)
+
+        + (Budget)
+            + id: `f014c4a7-15b2-42dd-8838-7e7587a54010`
+            + startDate: `2017-01-01`
+            + endDate: `2017-03-31`
+        + (Budget)
+            + id: `56ef2bc7-3abe-47c9-977e-ef2cb22d2feb`
+            + startDate: `2017-04-01`
+            + endDate: `2017-06-30`
+        + (Budget)
+            + id: `7fda13d2-519a-4306-9725-0f951b8bf37c`
+            + startDate: `2017-07-01`
+            + endDate: `2017-09-30`
+        + (Budget)
+            + id: `3497fe40-a024-4c5b-8380-e7d12c2b7ba4`
+            + startDate: `2017-10-01`
+            + endDate: `2017-12-31`
+        
+        
++ Response 404 (application/json)
+
+    + Attributes
+    
+        + errors (array[Error])
+
++ Response 500 (application/json)
+
+    + Attributes
+    
+        + errors (array[Error])
+
+## Data Structures
+
+# Budget (object)
+- id: `d022eef6-79aa-4938-872e-d0ff5bb92b6e` (string) - The ID of this budget.
+- clientId: `8a28cf7f-fa9e-44e9-ab3c-36f3086f4ad6` (string) - The client ID of the customer company.
+- ownerId: `ea8ca890-cf1e-491b-b588-7b2677aba124` (string) - The user ID of the owner of the budget.
+- points: 100000 (number) - The number of points in this budget.
+- startDate: `2017-01-01` (string) - Effective start date of the budget in ISO 8601 format.
+- endDate: `2017-12-31` (string) - Effective end date of the budget in ISO 8601 format.
+
+# Error (object)
+- status (string)
+- code (string)
+- title (string)
